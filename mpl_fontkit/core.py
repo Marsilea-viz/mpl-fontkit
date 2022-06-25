@@ -1,11 +1,10 @@
-from functools import lru_cache
 from pathlib import Path
-from pprint import pprint
 
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.font_manager import fontManager
 from thefuzz import process
+from thefuzz import fuzz
 
 from mpl_fontkit.download import get_google_font
 
@@ -37,7 +36,7 @@ def _get_current_fonts_name():
 
 
 def _get_similar_font(font):
-    result, _ = process.extractOne(font, _get_current_fonts_name())
+    result, _ = process.extractOne(font, _get_current_fonts_name(), scorer=fuzz.token_sort_ratio)
     return result
 
 
@@ -171,19 +170,3 @@ class FontKit:
             ax.text(0.5, y, str(font), fontdict=dict(fontfamily=font, ha="center", va="center", size=14))
             y -= 0.1
         return ax
-
-
-
-class Typography:
-
-    def __init__(self, font):
-        if _has_font(font):
-            self.font = font
-        else:
-            _raise_font_no_exist(font)
-
-    def __repr__(self):
-        return self.font
-
-    def _repr_html_(self):
-        return f"<p>{self.font}: <span style='font-family:{self.font};'>{self.font}</span></p>"
