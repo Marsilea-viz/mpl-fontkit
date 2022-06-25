@@ -2,6 +2,7 @@
 
 - Use font from google fonts
 - Set the font and use it easily
+- Helpful error message to get your font name right
 
 ### Install
 
@@ -16,7 +17,13 @@ from mpl_fontkit import FontKit
 
 # https://fonts.google.com/specimen/Lato?query=Lato
 fk = FontKit().get("Lato")
-# To check available styles for the font
+```
+If the font does not available in matplotlib,
+this will download from Google and add it to
+matplotlib.
+
+To check available styles for a font
+```python
 fk.font_table("Lato")
 ```
 ```shell
@@ -45,7 +52,27 @@ ax.set_title("Lato Font", fontdict={"style": "italic",
 ```
 <img src="images/in_plot.svg" alt="show in plot" width="300">
 
-#### Get usable fonts
+To set a font manually. 
+This will update the `rcParams` for you.
+```python
+from mpl_fontkit import FontKit
+FontKit().set_global("Lato")
+```
+
+Most of the time when you can't get the font to work
+simply because the font name is not the same as the file name.
+You can just type a fuzzy name, we will try to find
+a similar name and show you in the error message.
+
+```python
+from mpl_fontkit import FontKit
+FontKit().set_global("Lat")
+```
+```shell
+LookupError: Cannot find Lat, do you mean: Lato. Use `.fonts()` to list all the available fonts.
+```
+
+#### Get available fonts
 
 ```python
 from mpl_fontkit import FontKit
