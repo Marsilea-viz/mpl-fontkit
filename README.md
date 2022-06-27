@@ -1,5 +1,7 @@
 # mpl_fontkit
 
+![pypi](https://flat.badgen.net/pypi/v/mpl_fontkit?color=blue)
+
 - Use font from google fonts
 - Set the font and use it easily
 - Helpful error message to get your font name right
@@ -50,7 +52,7 @@ ax.set_title("Lato Font", fontdict={"style": "italic",
                                     "weight": 700, 
                                     "size": 24})
 ```
-<img src="images/in_plot.svg" alt="show in plot" width="300">
+<img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/in_plot.svg" alt="show in plot" width="300">
 
 To set a font manually. 
 This will update the `rcParams` for you.
@@ -97,5 +99,5 @@ FontKit().show("Lato")
 # To display all fonts at once
 # FontKit().show_fonts()
 ```
-<img src="images/show.svg" width="300">
+<img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/show.svg" width="300">
 
