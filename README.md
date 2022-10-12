@@ -15,10 +15,10 @@ pip install mpl_fontkit
 ### Quick Start
 
 ```python
-from mpl_fontkit import FontKit
+import mpl_fontkit as fk
 
 # https://fonts.google.com/specimen/Lato?query=Lato
-fk = FontKit().get("Lato")
+fk.install("Lato")
 ```
 If the font does not available in matplotlib,
 this will download from Google and add it to
@@ -28,19 +28,22 @@ To check available styles for a font
 ```python
 fk.font_table("Lato")
 ```
-```shell
-  Name     Style    Variant    Weight   Stretch 
-  ----     -----    -------    -----    ------- 
-  Lato     normal    normal     250      normal 
-  Lato     italic    normal     250      normal 
-  Lato     normal    normal     300      normal 
-  Lato     italic    normal     300      normal 
-  Lato     normal    normal     400      normal 
-  Lato     italic    normal     400      normal 
-  Lato     normal    normal     700      normal 
-  Lato     italic    normal     700      normal 
-  Lato     normal    normal     900      normal 
-  Lato     italic    normal     900      normal 
+```text
+                     Lato                     
+┏━━━━━━┳━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━┓
+┃ Name ┃ Style  ┃ Variant ┃ Weight ┃ Stretch ┃
+┡━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━┩
+│ Lato │ normal │ normal  │ 250    │ normal  │
+│ Lato │ italic │ normal  │ 250    │ normal  │
+│ Lato │ normal │ normal  │ 300    │ normal  │
+│ Lato │ italic │ normal  │ 300    │ normal  │
+│ Lato │ normal │ normal  │ 400    │ normal  │
+│ Lato │ italic │ normal  │ 400    │ normal  │
+│ Lato │ normal │ normal  │ 700    │ normal  │
+│ Lato │ italic │ normal  │ 700    │ normal  │
+│ Lato │ normal │ normal  │ 900    │ normal  │
+│ Lato │ italic │ normal  │ 900    │ normal  │
+└──────┴────────┴─────────┴────────┴─────────┘
 ```
 
 And then you are ready to use it in your plots
@@ -56,9 +59,11 @@ ax.set_title("Lato Font", fontdict={"style": "italic",
 
 To set a font manually. 
 This will update the `rcParams` for you.
+
 ```python
-from mpl_fontkit import FontKit
-FontKit().set_global("Lato")
+import mpl_fontkit as fk
+
+fk.set_font("Lato")
 ```
 
 Most of the time when you can't get the font to work
@@ -67,18 +72,19 @@ You can just type a fuzzy name, we will try to find
 a similar name and show you in the error message.
 
 ```python
-from mpl_fontkit import FontKit
-FontKit().set_global("Lat")
+import mpl_fontkit as fk
+
+fk.set_font("Lat")
 ```
-```shell
-LookupError: Cannot find Lat, do you mean: Lato. Use `.fonts()` to list all the available fonts.
+```text
+LookupError: Cannot find Lat, do you mean: Lato. 
+    Use `.list_fonts()` to list all the available fonts.
 ```
 
 #### Get available fonts
 
 ```python
-from mpl_fontkit import FontKit
-print(FontKit().fonts())
+fk.list_fonts()
 ```
 ```shell
 ['Agency FB',
@@ -92,12 +98,15 @@ print(FontKit().fonts())
  
  ```
 
-### To show what a font looks like
+### What fonts look like?
+
+Show one font
 ```python
-from mpl_fontkit import FontKit
-FontKit().show("Lato")
-# To display all fonts at once
-# FontKit().show_fonts()
+fk.show("Lato")
 ```
 <img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/show.svg" width="300">
 
+Show all fonts at once
+```python
+fk.show_fonts()
+```
