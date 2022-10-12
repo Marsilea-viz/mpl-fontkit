@@ -2,6 +2,7 @@ import zipfile
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import urlretrieve
+from urllib.parse import quote
 
 
 def extract_font(filename, store_path):
@@ -16,7 +17,8 @@ def extract_font(filename, store_path):
 
 def get_google_font(font_family, store_path, use_cache=True):
     store_path = Path(store_path)
-    download_url = f"https://fonts.google.com/download?family={font_family}"
+    download_url = \
+        f"https://fonts.google.com/download?family={quote(font_family)}"
     filename = store_path / f"{font_family}.zip"
     if use_cache & (filename.exists()):
         return extract_font(filename, store_path)
