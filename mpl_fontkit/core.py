@@ -4,12 +4,10 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.font_manager import fontManager
-from rich.console import Console
-from rich.table import Table
 from thefuzz import fuzz
 from thefuzz import process
 
-from mpl_fontkit.download import get_google_font
+from .download import get_google_font
 
 
 def _get_current_fonts_name():
@@ -108,28 +106,47 @@ def add_ttf(ttf_font):
     fontManager.addfont(path=str(ttf_font))
 
 
-def font_table(font):
-    if not _has_font(font):
-        _raise_font_no_exist(font)
-    table = Table(title=font)
-    table.add_column("Name")
-    table.add_column("Style")
-    table.add_column("Variant")
-    table.add_column("Weight")
-    table.add_column("Stretch")
-
+def font_entries(font):
+    styles = []
     for fe in fontManager.ttflist:
         if fe.name == font:
-            table.add_row(
-                fe.name, fe.style, fe.variant, str(fe.weight), fe.stretch
-            )
-    console = Console()
-    console.print(table)
+            styles.append(fe)
+    return styles
+
+
+def font_table(font, showcase_text="Hello World!"):
+    if not _has_font(font):
+        _raise_font_no_exist(font)
+
+    _, ax = plt.subplots()
+    ax.set_axis_off()
+
+    rows = [[fe.name, fe.style, fe.variant, fe.weight,
+             fe.stretch, showcase_text] for fe in font_entries(font)
+            ]
+    table = ax.table(
+        cellText=rows,
+        cellLoc="center",
+        colLabels=['Name', 'Style', 'Variant',
+                   'Weight', 'Stretch', 'Showcase'],
+        loc="center"
+    )
+    cells = table.get_celld()
+    for row_ix, row in enumerate(rows):
+        cell = cells[(row_ix + 1, 5)]
+        cell.set_text_props(
+            fontstyle=row[1],
+            fontvariant=row[2],
+            fontweight=row[3],
+            fontstretch=row[4]
+        )
+
+    return ax
 
 
 def show(font):
     _, ax = plt.subplots()
-    ax.axis("off")
+    ax.set_axis_off()
     config = dict(fontfamily=font, va="center", ha="center")
     ax.text(0.5, 0.6, f"{font}", fontdict={"fontsize": 24, **config})
     ax.text(0.5, 0.4, f"Almost before we knew it,\nwe had left the ground",
@@ -140,7 +157,7 @@ def show(font):
 def show_fonts():
     font_list = list_fonts()
     _, ax = plt.subplots()
-    ax.axis("off")
+    ax.set_axis_off()
     y = 1
     for font in font_list:
         ax.text(0.5, y, str(font),
