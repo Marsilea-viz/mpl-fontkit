@@ -28,23 +28,7 @@ To check available styles for a font
 ```python
 fk.font_table("Lato")
 ```
-```text
-                     Lato                     
-┏━━━━━━┳━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━┓
-┃ Name ┃ Style  ┃ Variant ┃ Weight ┃ Stretch ┃
-┡━━━━━━╇━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━┩
-│ Lato │ normal │ normal  │ 250    │ normal  │
-│ Lato │ italic │ normal  │ 250    │ normal  │
-│ Lato │ normal │ normal  │ 300    │ normal  │
-│ Lato │ italic │ normal  │ 300    │ normal  │
-│ Lato │ normal │ normal  │ 400    │ normal  │
-│ Lato │ italic │ normal  │ 400    │ normal  │
-│ Lato │ normal │ normal  │ 700    │ normal  │
-│ Lato │ italic │ normal  │ 700    │ normal  │
-│ Lato │ normal │ normal  │ 900    │ normal  │
-│ Lato │ italic │ normal  │ 900    │ normal  │
-└──────┴────────┴─────────┴────────┴─────────┘
-```
+<img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/font_table.svg" width="300">
 
 And then you are ready to use it in your plots
 
