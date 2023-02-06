@@ -6,6 +6,7 @@ from matplotlib import rcParams
 from matplotlib.font_manager import fontManager
 from thefuzz import fuzz
 from thefuzz import process
+from platformdirs import user_data_path
 
 from .download import get_google_font
 
@@ -33,7 +34,7 @@ def _has_font(font):
 
 
 def get_font_install_path():
-    install_path = Path(".fonts")
+    install_path = user_data_path(appname="mpl_fontkit")
     install_path.mkdir(exist_ok=True)
     return install_path
 
