@@ -1,14 +1,13 @@
 import shutil
-from pathlib import Path
 
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-from matplotlib.font_manager import fontManager
+from matplotlib.font_manager import fontManager, FontProperties
+from platformdirs import user_data_path
 from thefuzz import fuzz
 from thefuzz import process
-from platformdirs import user_data_path
 
-from .download import get_google_font
+from .download import get_google_font, get_fontawesome
 
 
 def _get_current_fonts_name():
@@ -49,7 +48,9 @@ def install(
         as_global=True,
         save=None,
         source="google",
-        use_cache=True):
+        use_cache=True,
+        verbose=True,
+):
     """To get a font from other resources
 
     Args:
@@ -62,24 +63,61 @@ def install(
     Returns:
 
     """
-    if not _has_font(font):
-        if save is None:
-            save_folder = get_font_install_path()
-        else:
-            save_folder = save
-        if source == "google":
-            font_list = get_google_font(font, save_folder, use_cache=use_cache)
-        else:
-            raise NotImplemented("Can only load from google font for now.")
-        for ttf in font_list:
-            fontManager.addfont(path=str(ttf.absolute()))
+    if save is None:
+        save_folder = get_font_install_path()
+    else:
+        save_folder = save
+    if source == "google":
+        font_list = get_google_font(font, save_folder, use_cache=use_cache)
+    else:
+        raise NotImplemented("Can only load from google font for now.")
+    for ttf in font_list:
+        fontManager.addfont(path=str(ttf.absolute()))
+
+    fp = FontProperties(fname=str(ttf.absolute()))
+    font_name = fp.get_name()
 
     if as_global:
-        set_font(font)
+        set_font(font_name)
+
+    if verbose:
+        print(f"Font name: `{fp.get_name()}`")
+
+
+def install_fontawesome(
+        save=None,
+        use_cache=True,
+        verbose=True
+):
+    """Install fontawesome icon as font
+
+    To use fontawesome, you can find the icon from
+    https://fontawesome.com/search. Copy the unicode
+    and use it as text.
+
+    """
+    if save is None:
+        save_folder = get_font_install_path()
+    else:
+        save_folder = save
+
+    font_list = get_fontawesome(save_folder, use_cache)
+    names = set()
+    for ttf in font_list:
+        fontManager.addfont(path=str(ttf.absolute()))
+        fp = FontProperties(fname=str(ttf.absolute()))
+        names.add(fp.get_name())
+
+    names = [f"`{n}`" for n in names]
+
+    if verbose:
+        print(f"Font name: {', '.join(names)}; "
+              f"Go to https://fontawesome.com/search to find your icons, "
+              f"only the free version is loaded.")
 
 
 def set_font(font):
-    """
+    """Make a font available globally
 
     Args:
         font: A font name
@@ -90,12 +128,15 @@ def set_font(font):
         old_params = rcParams['font.family']
         if isinstance(old_params, str):
             old_params = [old_params]
+        if font in old_params:
+            old_params.remove(font)
         rcParams['font.family'] = [font, *old_params]
     else:
         _raise_font_no_exist(font)
 
 
 def current_font():
+    """List the current default fonts"""
     return rcParams['font.family']
 
 
@@ -107,6 +148,16 @@ def add_ttf(ttf_font):
     fontManager.addfont(path=str(ttf_font))
 
 
+def load(font_file):
+    """Load a font file, make it available to matplotlib
+
+    Args:
+        font_file: Path to font file, .ttf/.otf/.afm etc.
+
+    """
+    fontManager.addfont(path=font_file)
+
+
 def font_entries(font):
     styles = []
     for fe in fontManager.ttflist:
@@ -115,11 +166,13 @@ def font_entries(font):
     return styles
 
 
-def font_table(font, showcase_text="Hello World!"):
+def font_table(font, showcase_text="Hello World!", ax=None):
+    """Show fonts variants in a table"""
     if not _has_font(font):
         _raise_font_no_exist(font)
 
-    _, ax = plt.subplots()
+    if ax is None:
+        ax = plt.gca()
     ax.set_axis_off()
 
     rows = [[fe.name, fe.style, fe.variant, fe.weight,
@@ -145,8 +198,10 @@ def font_table(font, showcase_text="Hello World!"):
     return ax
 
 
-def show(font):
-    _, ax = plt.subplots()
+def show(font, ax=None):
+    """Show what a font looks like"""
+    if ax is None:
+        ax = plt.gca()
     ax.set_axis_off()
     config = dict(fontfamily=font, va="center", ha="center")
     ax.text(0.5, 0.6, f"{font}", fontdict={"fontsize": 24, **config})
@@ -156,6 +211,7 @@ def show(font):
 
 
 def show_fonts():
+    """Show all the fonts"""
     font_list = list_fonts()
     _, ax = plt.subplots()
     ax.set_axis_off()
