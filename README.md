@@ -3,6 +3,7 @@
 ![pypi](https://flat.badgen.net/pypi/v/mpl_fontkit?color=blue)
 
 - Use font from google fonts
+- Use icon from font awesome
 - Set the font and use it easily
 - Helpful error message to get your font name right
 
@@ -13,6 +14,9 @@ pip install mpl_fontkit
 ```
 
 ### Quick Start
+
+
+#### Install Google Fonts
 
 ```python
 import mpl_fontkit as fk
@@ -28,18 +32,35 @@ To check available styles for a font
 ```python
 fk.font_table("Lato")
 ```
-<img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/font_table.svg" width="300">
+<img src="https://raw.githubusercontent.com/heatgraphy/mpl-fontkit/main/images/font_tables.svg" width="300">
 
 And then you are ready to use it in your plots
 
 ```python
 import matplotlib.pyplot as plt
-_, ax = plt.subplots()
-ax.set_title("Lato Font", fontdict={"style": "italic", 
+plt.text("Lato Font", fontdict={"style": "italic", 
                                     "weight": 700, 
                                     "size": 24})
 ```
-<img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/in_plot.svg" alt="show in plot" width="300">
+<img src="https://raw.githubusercontent.com/heatgraphy/mpl-fontkit/main/images/in_plot.svg" alt="show in plot" width="300">
+
+#### Install Font Awesome
+
+To install font awesome and use it in your plot.
+```python
+fk.install_fontawesome()
+
+plt.text(.5, .5, "\uf58b\uf005\uf59b", fontfamily="Font Awesome 6 Free")
+```
+
+The font awesome is available as `Font Awesome 6 Free` and
+`Font Awesome 6 Brands`, the name of icon is encoded as unicode.
+
+You can search for icons and get the unicode [here](https://fontawesome.com/search).
+
+<img src="https://raw.githubusercontent.com/heatgraphy/mpl-fontkit/main/images/fontawesome.svg" alt="fontawesome showcase" width="200">
+
+#### Set a font globally
 
 To set a font manually. 
 This will update the `rcParams` for you.
@@ -82,13 +103,13 @@ fk.list_fonts()
  
  ```
 
-### What fonts look like?
+#### What fonts look like?
 
 Show one font
 ```python
 fk.show("Lato")
 ```
-<img src="https://raw.githubusercontent.com/Mr-Milk/mpl-fontkit/main/images/show.svg" width="300">
+<img src="https://raw.githubusercontent.com/heatgraphy/mpl-fontkit/main/images/show.svg" width="200">
 
 Show all fonts at once
 ```python
