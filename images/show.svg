@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="349.2pt" height="231.84pt" viewBox="0 0 349.2 231.84" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="216pt" height="216pt" viewBox="0 0 216 216" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2022-06-25T11:45:26.474293</dc:date>
+    <dc:date>2023-03-17T11:07:05.452501</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.5.2, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.6.1, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -21,18 +21,17 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 231.84 
-L 349.2 231.84 
-L 349.2 0 
+   <path d="M 0 216 
+L 216 216 
+L 216 0 
 L 0 0 
-L 0 231.84 
 z
-" style="fill: none"/>
+" style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="text_1">
     <!-- Lato -->
-    <g transform="translate(151.2 100.956)scale(0.24 -0.24)">
+    <g transform="translate(87.3 99.228) scale(0.24 -0.24)">
      <defs>
       <path id="Lato-Regular-4c" d="M 1178 522 
 L 3162 522 
@@ -166,7 +165,7 @@ z
    </g>
    <g id="text_2">
     <!-- Almost before we knew it, -->
-    <g transform="translate(84.23375 133.653)scale(0.16 -0.16)">
+    <g transform="translate(20.33375 121.701) scale(0.16 -0.16)">
      <defs>
       <path id="Lato-Regular-41" d="M 4330 0 
 L 3850 0 
@@ -580,7 +579,7 @@ z
      <use xlink:href="#Lato-Regular-2c" x="1108.400146"/>
     </g>
     <!-- we had left the ground -->
-    <g transform="translate(96.45875 150.54)scale(0.16 -0.16)">
+    <g transform="translate(32.55875 138.588) scale(0.16 -0.16)">
      <defs>
       <path id="Lato-Regular-68" d="M 467 0 
 L 467 4714 
