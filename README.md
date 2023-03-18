@@ -38,9 +38,7 @@ And then you are ready to use it in your plots
 
 ```python
 import matplotlib.pyplot as plt
-plt.text("Lato Font", fontdict={"style": "italic", 
-                                    "weight": 700, 
-                                    "size": 24})
+plt.text("Lato Font", fontdict={"style": "italic", "weight": 700, "size": 24})
 ```
 <img src="https://raw.githubusercontent.com/heatgraphy/mpl-fontkit/main/images/in_plot.svg" alt="show in plot" width="300">
 
