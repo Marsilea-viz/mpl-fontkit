@@ -1,4 +1,5 @@
 import shutil
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
@@ -34,7 +35,11 @@ def _has_font(font):
 
 def get_font_install_path():
     install_path = user_data_path(appname="mpl_fontkit")
-    install_path.mkdir(exist_ok=True)
+    try:
+        install_path.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        if not install_path.exists():
+            install_path = Path(".font")
     return install_path
 
 
