@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ '3.7', '3.8', '3.9', '3.10' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -19,19 +19,19 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine
-      - name: Build and check
-        run: |
-          python setup.py sdist bdist_wheel
-          twine check dist/*
-
-      - name: List wheels
-        run: find dist/*
+          pip install flit
+          pip install .
+      - name: Publish to test pypi
+        env:
+          FLIT_INDEX_URL: https://test.ipynb.pypi.org/legacy/
+          FLIT_USERNAME: __token__
+          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: flit publish || exit 0
 
       - name: Publish to pypi
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          twine upload --skip-existing dist/*
+          FLIT_INDEX_URL: https://upload.pypi.org/legacy/
+          FLIT_USERNAME: __token__
+          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: flit publish

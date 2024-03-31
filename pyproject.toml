@@ -1,14 +1,13 @@
 [build-system]
-requires = ["setuptools >= 61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "mpl_fontkit"
-version = "0.5.0"
-description = "Easy font management for matplotlib"
+dynamic = ["version", "description"]
 readme = "README.md"
 authors = [
-    {name = "Mr.Milk", email= "zym.zym1220@gmail.com"}
+    {name = "Mr-Milk", email= "zym.zym1220@gmail.com"}
 ]
 license = {text = "MIT License"}
 classifiers = [
@@ -19,16 +18,11 @@ classifiers = [
       "Intended Audience :: Developers",
       "Topic :: Scientific/Engineering :: Visualization"
     ]
-
+requires-python = ">= 3.8"
 dependencies = [
     "matplotlib",
     "httpx",
 ]
 
-requires-python = ">= 3.8"
-
 [project.urls]
 Homepage = "https://github.com/Marsilea-viz/mpl_fontkit"
-
-[tool.setuptools.packages.find]
-where = ["mpl_fontkit"]
