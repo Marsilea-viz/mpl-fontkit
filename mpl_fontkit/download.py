@@ -1,8 +1,9 @@
+import json
 import zipfile
 from pathlib import Path
-from urllib.error import HTTPError
-from urllib.parse import quote
-from urllib.request import urlretrieve
+
+import httpx
+from httpx import HTTPError
 
 
 def extract_font(filename, store_path):
@@ -18,13 +19,25 @@ def extract_font(filename, store_path):
 def get_google_font(font_family, store_path, use_cache=True):
     store_path = Path(store_path)
     download_url = \
-        f"https://fonts.google.com/download?family={quote(font_family)}"
+        f"https://fonts.google.com/download/list?family={font_family}"
     filename = store_path / f"{font_family}.zip"
     if use_cache & (filename.exists()):
         return extract_font(filename, store_path)
     else:
         try:
-            _ = urlretrieve(download_url, filename=filename)
+            res = httpx.get(download_url)
+            text = res.text
+            index = text.find('{')
+            if index != -1:
+                text = text[index:]
+            records = json.loads(text)['manifest']['fileRefs']
+            with zipfile.ZipFile(filename, "w") as f:
+                for record in records:
+                    url = record['url']
+                    name = Path(record['filename']).name
+                    res = httpx.get(url)
+                    with f.open(name, 'w') as tff:
+                        tff.write(res.content)
         except Exception as e:
             if e == HTTPError:
                 raise NameError(f"{font_family} does not exist in google font")
@@ -47,7 +60,9 @@ def get_fontawesome(store_path, use_cache=True):
             font_list.append(filename)
         else:
             try:
-                _ = urlretrieve(base_url + ttf_file, filename=filename)
+                res = httpx.get(base_url + ttf_file, follow_redirects=True)
+                with open(filename, 'wb') as f:
+                    f.write(res.content)
             except Exception as e:
                 raise ConnectionError("Network issue")
             finally:
